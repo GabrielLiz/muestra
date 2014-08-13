@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item >
+
+        <shape android:shape="rectangle">
+            <solid android:color="#ffff7967" />
+            <size android:height="150dp" android:width="150dp"/>
+        </shape>
+
+    </item>
+
+    <item android:bottom="100dp">
+            <shape android:shape="rectangle" >
+                <gradient android:angle="90"
+                    android:gradientRadius="90"
+                    android:endColor="#ff3d1d19"
+                    android:centerColor="#ff360000"
+                    android:centerX="0.9"
+                    >
+
+                </gradient>
+            </shape>
+
+    </item>
+
+    <item android:top="30dp">
+        <shape android:shape="rectangle" >
+            <gradient android:angle="270"
+                android:gradientRadius="90"
+                android:endColor="#ff0e0000"
+                android:centerColor="#ff490000"
+                android:centerY="0.98"
+                android:centerX="0.97"
+                >
+
+            </gradient>
+        </shape>
+
+    </item>
+    <item android:bottom="3dp" android:top="1dp">
+        <shape android:shape="rectangle" >
+            <gradient android:angle="360"
+                android:gradientRadius="90"
+                android:endColor="#ff0e0000"
+                android:centerColor="#ff8a0000"
+                android:centerY="0.98"
+                android:centerX="0.98"
+                >
+
+            </gradient>
+        </shape>
+
+    </item>
+    <item android:bottom="3dp" android:top="1dp">
+        <shape android:shape="rectangle" >
+            <gradient android:angle="180"
+                android:gradientRadius="90"
+                android:endColor="#ff0e0000"
+                android:centerColor="#ff8a0000"
+                android:centerY="0.98"
+                android:centerX="0.99"
+                >
+
+            </gradient>
+        </shape>
+
+    </item>
+
+
+
+
+
+
+
+</layer-list>

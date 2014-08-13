@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ingredients_array">
+
+        <item name="onion">Cebolla</item>
+        <item name="potato">Patata</item>
+        <item name="red_pepper">Pimiento Rojo</item>
+        <item name="lettuce">Lechuga</item>
+        <item name="cucumber">Pepino</item>
+        <item name="tomato">Tomate</item>
+        <item name="carrot">Zanahoria</item>
+    </string-array>
+
+</resources>

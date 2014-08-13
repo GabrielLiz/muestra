@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyRecepy</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_websearch">Busqueda</string>
+    <string name="app_not_available">No esta disponible</string>
+    <string name= "btn_launch">Almuerzos</string>
+    <string name= "btn_dinner">Cenas</string>
+    <string name= "btn_breakfast">Desayunos</string>
+    <string name="add_menu">receta nueva</string>
+    <string name="drawer_open">Abierto</string>
+    <string name="drawer_close">Cerrado</string>
+    <string-array name="item_listview">
+        <item>Usuario</item>
+        <item>Mi Cocina</item>
+        <item>Cocina Mundial</item>
+        <item>Opciones</item>
+
+    </string-array>
+
+</resources>

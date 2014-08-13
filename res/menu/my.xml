@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MyActivity"
+
+
+    >
+    <item android:id="@+id/action_settings"
+        android:title="dabase"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+        <item android:id="@+id/action_websearch"
+            android:icon="@drawable/action_search"
+            android:title="@string/action_websearch"
+            app:showAsAction="always|collapseActionView"
+            app:actionViewClass ="android.support.v7.widget.SearchView"
+            />
+            <item
+                android:id="@+id/agregar_tab_bar"
+                android:icon="@drawable/ic_action_new"
+                android:title="@string/add_menu"
+                app:showAsAction="ifRoom|withText"
+                />
+    <item
+        android:id="@+id/menu_search"
+        android:title="Buscar"
+
+        >
+
+    </item>
+    <item android:id="@+id/sample_action"
+        app:showAsAction="ifRoom|withText"
+        android:title="samp" />
+</menu>

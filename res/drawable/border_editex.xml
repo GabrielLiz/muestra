@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item >
+
+        <shape android:shape="rectangle">
+            <solid android:color="#ffecebff" />
+        </shape>
+    </item>
+
+
+
+    <item   android:top="4dp" android:right="4dp" android:left="4dp" android:bottom="4dp"
+        >
+        <shape android:shape="rectangle">
+
+            <gradient
+                android:gradientRadius="0"
+                android:startColor="#ff000000"
+                android:centerColor="#ff8c8c8c"
+                android:endColor="#fff"
+                />
+        </shape>
+    </item>
+
+
+
+    <item>
+        <shape android:shape="rectangle">
+            <!--- abajo -->
+            <gradient android:angle="-90"
+                android:centerColor="#fff"
+                android:endColor="#ff3f3f3f"
+                android:startColor="@android:color/transparent"
+                android:centerY="0.98"
+                >
+
+            </gradient>
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle" >
+            <!--- arriba -->
+            <gradient android:angle="90"
+                android:centerColor="@android:color/transparent"
+                android:endColor="#ffbebebe"
+                android:startColor="@android:color/transparent"
+                android:centerY="0.99"
+                >
+
+            </gradient>
+        </shape>
+    </item>
+    <item>
+    <shape android:shape="rectangle" >
+        <!--- derecha -->
+        <gradient android:angle="360"
+            android:centerColor="@android:color/transparent"
+            android:endColor="#ff3f3f3f"
+            android:startColor="@android:color/transparent"
+            android:centerY="0.98"
+            >
+
+        </gradient>
+    </shape>
+</item>
+    <item>
+        <shape android:shape="rectangle" >
+            <!--- izquierda -->
+            <gradient android:angle="180"
+                android:centerColor="@android:color/transparent"
+                android:endColor="#ffbebebe"
+                android:startColor="@android:color/transparent"
+                android:centerY="0.99"
+                >
+
+            </gradient>
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ff7a98ff"
+    android:id="@+id/scroll_recepy_gab"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Tu Receta"
+                android:id="@+id/titulo_of_recepy_gab"
+                android:textSize="40sp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                />
+
+        <FrameLayout
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:foregroundGravity="right">
+
+            <ImageView
+                android:id="@+id/image_mi_receta_gab"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:src="@drawable/cena_de_navidad" />
+            <Button
+                android:background="@drawable/camara_icon"
+                android:id="@+id/camara_icon_gab"
+                android:textColor="@color/gray"
+                android:layout_gravity="center"
+                android:onClick="cameraBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+        </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_gab"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_view_rounded_single"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Nombre de la receta"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/title_edit_text_gab"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginBottom="10dp"
+                android:ems="8"
+                android:background="@drawable/box_editext"
+                android:paddingLeft="10dp"
+                android:textColor="#ffffff"
+                />
+
+
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_view_rounded_single"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/textgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Escoje  Horario"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+
+            <RadioGroup
+                android:id="@+id/buttoms_group_gab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textColor="#ffffff"
+                    android:text="@string/btn_breakfast"
+                    />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="@string/btn_dinner" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="@string/btn_launch" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="Postre" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="Todos" />
+
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_view_rounded_single"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/grip_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Tip de comida"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+
+            <RadioGroup
+                android:id="@+id/gusto_gab"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textColor="#ffffff"
+                    android:text="@string/btn_breakfast"
+                    />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="@string/btn_dinner" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="@string/btn_launch" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="Postre" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:text="Todos" />
+
+
+            </RadioGroup>
+
+        </LinearLayout>
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
+        <LinearLayout
+            android:id="@+id/refresh_match_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_view_rounded_single"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Duracion aprox de preparacion"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <SeekBar
+                android:id="@+id/volume_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:progress="0"
+                android:max="100"
+                android:progressDrawable="@drawable/progressbar"
+                android:secondaryProgress="0" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="12" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:text="15min"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:text="20min"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:text="40min"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:text="60min"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:text="80min"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:text="100min"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_view_rounded_single"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/text_add_ingridients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Ingredientes"
+                android:textColor="#ffffff"
+                android:textSize="23sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="agregarIngredientsBtn"
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/add_ingredients_btn_gab"
+                    android:text="agregar"
+                    />
+
+                <ImageView
+                android:id="@+id/ingredient_select_1_gab"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/ingredient_select_2_gab"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/ingredient_select_3_gab"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+                <ImageView
+                    android:id="@+id/ingredient_select_4_gab"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <ImageView
+                    android:id="@+id/ingredient_select_5_gab"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/background_view_rounded_single"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+        android:text="Descripcion"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <EditText
+            android:maxWidth="50dp"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:freezesText="true"
+            android:background="@color/white"
+            android:lines="10"
+            android:selectAllOnFocus="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:id="@+id/text_descrip_gab" />
+
+
+    </LinearLayout>
+        <Button
+            android:id="@+id/button_guardar_gab"
+            android:layout_width="fill_parent"
+            android:background="@drawable/background_view_rounded_single"
+
+            android:layout_height="wrap_content"
+            android:onClick="btnclickedsaved"
+            android:text="Guardar" />
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>

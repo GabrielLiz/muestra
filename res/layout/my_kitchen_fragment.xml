@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:id="@+id/botoneslayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/square"
+        >
+
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton"
+            android:text="@string/btn_breakfast"
+            android:layout_marginRight="15dp"
+
+
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desayunos"
+            android:id="@+id/checkBox" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Almuerzos"
+            android:id="@+id/checkBox2" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffb63f"
+        android:layout_marginBottom="50dp"
+        >
+    <com.lizproject.activity.mykitchen.ui.core.core.ExpandingListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        tools:context=".StartActivity"
+
+        />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
