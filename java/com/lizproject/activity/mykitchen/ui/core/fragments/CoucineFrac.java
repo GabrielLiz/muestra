@@ -9,14 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.lizproject.activity.mykitchen.R;
 import com.lizproject.activity.mykitchen.mainAplicationDeafults;
 import com.lizproject.activity.mykitchen.model.Sqldatabase;
 import com.lizproject.activity.mykitchen.ui.core.adapters.CustomArrayAdapter;
-import com.lizproject.activity.mykitchen.ui.core.presenter.ExpandableListItem;
 import com.lizproject.activity.mykitchen.ui.core.core.ExpandingListView;
+import com.lizproject.activity.mykitchen.ui.core.presenter.ExpandableListItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public class CoucineFrac extends Fragment implements SwipeRefreshLayout.OnRefres
     private static final boolean DEBUG = true;
     private static final String TAG = "gabito";
 
-    private Button btn;
+    //private Button btn;
     public ExpandingListView mListView;
     private final int CELL_DEFAULT_HEIGHT = 200;
     private List<ExpandableListItem> mData;
@@ -68,7 +67,7 @@ public class CoucineFrac extends Fragment implements SwipeRefreshLayout.OnRefres
 
         FracRefreshLyt.setOnRefreshListener(this);
 
-        btn = (Button) vi.findViewById(R.id.btn_intent);
+     //   btn = (Button) vi.findViewById(R.id.btn_intent);
 
 
 
