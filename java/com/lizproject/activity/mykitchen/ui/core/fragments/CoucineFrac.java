@@ -32,7 +32,6 @@ public class CoucineFrac extends Fragment implements SwipeRefreshLayout.OnRefres
     private List<ExpandableListItem> mData;
     private CustomArrayAdapter adapter;
 
-    //RECEPY CUANDO SE LE DA GUARDAR TIENE QUE DEVOLVER LA ACTIVIDAD Y QUE LA VUELVA A CARGAR
     private SQLiteDatabase db;
     private SwipeRefreshLayout FracRefreshLyt;
     private Thread hilo;
