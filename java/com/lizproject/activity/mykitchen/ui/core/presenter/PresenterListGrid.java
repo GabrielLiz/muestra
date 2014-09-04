@@ -2,7 +2,6 @@ package com.lizproject.activity.mykitchen.ui.core.presenter;
 
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -19,10 +18,18 @@ public class PresenterListGrid {
     private  int key_id;
     private  boolean selected;
     private String name;
-    private boolean hasornot;
     private SQLiteDatabase db;
-    private Context contxt;
+    private int category_id;
     private  String query;
+    private String Category;
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
 
     public boolean getSelected() {
         return selected;
@@ -33,7 +40,12 @@ public class PresenterListGrid {
     }
 
 
-
+    public String  getCategory() {
+        return  Category;
+    }
+    public void setCategory(String category) {
+        Category = category;
+    }
 
     public PresenterListGrid (int key_id){
 
@@ -87,6 +99,7 @@ public class PresenterListGrid {
 
         return key_id;
     }
+
 
     public void setKey_id(int key_id) {
         this.key_id = key_id;

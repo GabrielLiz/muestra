@@ -47,7 +47,7 @@
         android:textColor="@color/white"
         />
     <Button
-        android:id="@+id/btn_"
+        android:id="@+id/btn_select_dialog_gab_type"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="btn2"

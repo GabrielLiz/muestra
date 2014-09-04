@@ -1,5 +1,7 @@
 package com.lizproject.activity.mykitchen.ui.core.dialog;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,13 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
 import com.lizproject.activity.mykitchen.R;
 import com.lizproject.activity.mykitchen.mainAplicationDeafults;
-import com.lizproject.activity.mykitchen.ui.core.adapters.GridViewAdapter;
+import com.lizproject.activity.mykitchen.ui.core.adapters.DialogGridAdapter;
 import com.lizproject.activity.mykitchen.ui.core.fragments.NewRecepyFrac;
 import com.lizproject.activity.mykitchen.ui.core.presenter.PresenterListGrid;
 
@@ -30,7 +32,7 @@ public class SelectIngredientsDialog extends android.support.v4.app.DialogFragme
     private Button btndismiis;
     private ArrayList<PresenterListGrid> lista;
     private SQLiteDatabase db;
-    private int num;
+    private DialogGridAdapter theadapter;
 
     public ArrayList<PresenterListGrid> getLista() {
         return lista;
@@ -50,15 +52,18 @@ public class SelectIngredientsDialog extends android.support.v4.app.DialogFragme
     // El mimso metodo de todos los Fragments onCreateView
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vi = inflater.inflate(R.layout.dialog_fragment_ingredients, container, false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        //El arraylist() se encarga de consultar la base de datos y llenar la Lista para luego agregarcelo al adaptador
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
 
         arraylista();
 
-        gridvi = (GridView) vi.findViewById(R.id.gridview_dialog);
+        View vi = inflater.inflate(R.layout.dialog_fragment_ingredients, null);
+
         btndismiis = (Button) vi.findViewById(R.id.searcheable_btn_dialog_gab);
+
+        GridView gridvi = (GridView) vi.findViewById(R.id.gridview_dialog_gab);
 
         btndismiis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,30 +76,37 @@ public class SelectIngredientsDialog extends android.support.v4.app.DialogFragme
             }
         });
 
+        btndismiis.setFocusable(false);
 
-        final GridViewAdapter theadapter = new GridViewAdapter(getActivity(), -1, lista);
+        theadapter = new DialogGridAdapter(getActivity(), -1, lista);
         gridvi.setAdapter(theadapter);
 
-        /*
         gridvi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Usar el sistema de Refresh que uso en el Listview para que cuando se haga click se cambie decolor
-                // y se acomode entre los primeros
 
-
-                if (!lista.get(position).getHas_vegetable()){
-                    lista.get(position).setHas_vegetable(1);
-                }else {
-                    lista.get(position).setHas_vegetable(0);
+                if (!theadapter.getItem(position).getSelected())
+                {
+                    theadapter.getItem(position).setSelected(true);
+                }else{
+                    theadapter.getItem(position).setSelected(false);
                 }
-
                 theadapter.notifyDataSetChanged();
             }
-        });*/
+        });
 
-        return vi;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(vi);
+
+
+
+        builder.setTitle(getActivity().getTitle());
+
+
+        return builder.create();
     }
+
 
     public void arraylista() {
         lista = new ArrayList<PresenterListGrid>();
@@ -131,68 +143,11 @@ public class SelectIngredientsDialog extends android.support.v4.app.DialogFragme
         }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        num = getArguments().getInt("num");
 
-        // Pick a style based on the num.
-        int style = SelectIngredientsDialog.STYLE_NORMAL, theme = 0;
-
-        switch ((num - 1) % 6) {
-            case 1:
-                style = SelectIngredientsDialog.STYLE_NO_TITLE;
-                break;
-            case 2:
-                style = SelectIngredientsDialog.STYLE_NO_FRAME;
-                break;
-            case 3:
-                style = SelectIngredientsDialog.STYLE_NO_INPUT;
-                break;
-            case 4:
-                style = SelectIngredientsDialog.STYLE_NORMAL;
-                break;
-            case 5:
-                style = SelectIngredientsDialog.STYLE_NORMAL;
-                break;
-            case 6:
-                style = SelectIngredientsDialog.STYLE_NO_TITLE;
-                break;
-            case 7:
-                style = SelectIngredientsDialog.STYLE_NO_FRAME;
-                break;
-            case 8:
-                style = SelectIngredientsDialog.STYLE_NORMAL;
-                break;
-        }
-        switch ((num - 1) % 6) {
-            case 4:
-                theme = android.R.style.Theme_Holo;
-                break;
-            case 5:
-                theme = android.R.style.Theme_Holo_Light_Dialog;
-                break;
-            case 6:
-                theme = android.R.style.Theme_Holo_Light;
-                break;
-            case 7:
-                theme = android.R.style.Theme_Holo_Light_Panel;
-                break;
-            case 8:
-                theme = android.R.style.Theme_Holo_Light;
-                break;
-        }
-        setStyle(style, theme);
-
-    }
-
-    public static SelectIngredientsDialog newInstance(int num) {
+    public static SelectIngredientsDialog newInstance() {
         SelectIngredientsDialog f = new SelectIngredientsDialog();
 
         // Supply num input as an argument.
-        Bundle args = new Bundle();
-        args.putInt("num", num);
-        f.setArguments(args);
 
         return f;
 

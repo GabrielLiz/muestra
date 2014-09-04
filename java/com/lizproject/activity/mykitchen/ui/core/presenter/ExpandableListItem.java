@@ -46,7 +46,7 @@ public class ExpandableListItem implements OnSizeChangedListener {
         this.descrip = descrip;
     }
 
-    public ExpandableListItem(String title, String decrio,String tiempo, int collapsedHeight, String text,String []lista,String ids[]) {
+    public ExpandableListItem(String title, String decrio,String tiempo, int collapsedHeight, String text,String []lista, String ids[]) {
 
         mTitle = title;
         mCollapsedHeight = collapsedHeight;
@@ -60,8 +60,9 @@ public class ExpandableListItem implements OnSizeChangedListener {
 
     }
 
-    public String[] getList() {
-        return list;
+    public String getList(int d) {
+
+        return list[d];
     }
 
     public void setList(String[] list) {

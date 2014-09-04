@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,14 +35,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.io.File;
 import java.util.ArrayList;
 
-public class NewRecepyFrac extends Fragment implements View.OnClickListener {
+public class NewRecepyFrac extends Fragment implements View.OnClickListener{
 
     private EditText editText_title_gab;
     private TextView textfulltitle;
-    private Button btn_guardar, btn_consultar,btn_ingredients;
+    private Button btn_guardar, btn_ingredients;
     private RadioGroup grouo_buttons_gab;
-    private String Title;
-    private String comida;
     private ImageView imgrecepy,img1,img2,img3,img4;
     private RadioButton radiobtn;
     private View vi;
@@ -51,21 +50,19 @@ public class NewRecepyFrac extends Fragment implements View.OnClickListener {
     private TextView recepytitle;
     private String foto;
     private static final int TAKE_PICTURE = 1;
-    private  double aleatorio = 0;
     public static final int DIALOG_FRAGMENT = 25;
     private  int progressChanged = 0;
-
-    public ArrayList<PresenterListGrid>li;
+    private SelectIngredientsDialog dialog;
+    public ArrayList<PresenterListGrid> listaIngredientes;
     private Uri output;
     private DisplayImageOptions options;
     private ImageLoader imageLoader;
-    public static final int CAPTURE_IMAGE_THUMBNAIL_ACTIVITY_REQUEST_CODE = 1888;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-          vi=inflater.inflate(R.layout.frac_new_reccepy,container,false);
+         vi=inflater.inflate(R.layout.frac_new_reccepy,container,false);
 
         imageLoader = ImageLoader.getInstance();
 
@@ -73,49 +70,29 @@ public class NewRecepyFrac extends Fragment implements View.OnClickListener {
                 .showImageForEmptyUri(R.drawable.ic_launcher).cacheOnDisk(true).cacheInMemory(false)
                 .build();
 
-        imgrecepy=(ImageView)vi.findViewById(R.id.image_mi_receta_gab);
-        editText_title_gab=(EditText)vi.findViewById(R.id.title_edit_text_gab);
-        grouo_buttons_gab=(RadioGroup)vi.findViewById(R.id.buttoms_group_gab);
-        btn_guardar=(Button)vi.findViewById(R.id.button_guardar_gab);
-        btn_ingredients=(Button)vi.findViewById(R.id.add_ingredients_btn_gab);
         textfulltitle=(TextView)vi.findViewById(R.id.text_full_titulo_gab);
         recepytitle=(TextView)vi.findViewById(R.id.titulo_of_recepy_gab);
+
+        editText_title_gab=(EditText)vi.findViewById(R.id.title_edit_text_gab);
+        texdescription =(EditText)vi.findViewById(R.id.text_descrip_gab);
+
+        grouo_buttons_gab=(RadioGroup)vi.findViewById(R.id.buttoms_group_gab);
+
+        btn_guardar=(Button)vi.findViewById(R.id.button_guardar_gab);
+        btn_ingredients=(Button)vi.findViewById(R.id.add_ingredients_btn_gab);
         makerecepyimg=(Button)vi.findViewById(R.id.camara_icon_gab  );
-         img1=(ImageView)vi.findViewById(R.id.ingredient_select_1_gab);
+
+        imgrecepy=(ImageView)vi.findViewById(R.id.image_mi_receta_gab);
+        img1=(ImageView)vi.findViewById(R.id.ingredient_select_1_gab);
         img2=(ImageView)vi.findViewById(R.id.ingredient_select_2_gab);
         img3=(ImageView)vi.findViewById(R.id.ingredient_select_3_gab);
         img4=(ImageView)vi.findViewById(R.id.ingredient_select_4_gab);
+
         volumeControl = (SeekBar)vi.findViewById(R.id.volume_bar);
-        texdescription =(EditText)vi.findViewById(R.id.text_descrip_gab);
+
         setupUI(vi.findViewById(R.id.scroll_recepy_gab));
-        /*
-        editText_title_gab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
-                    recepytitle.setText(editText_title_gab.getText().toString());
-                    Toast.makeText(getActivity(), "true", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getActivity(), "else", Toast.LENGTH_SHORT).show();
 
-                }
-            }
-        });
-*/
-/*
-        editText_title_gab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editText_title_gab.isFocused()){
-                    if(editText_title_gab.length()>0){
-
-                        recepytitle.setText(editText_title_gab.getText().toString());
-                    }
-                }
-            }
-        });
-*/
-              volumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+           volumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChanged = progress;
@@ -129,12 +106,14 @@ public class NewRecepyFrac extends Fragment implements View.OnClickListener {
             }
         });
 
-         btn_ingredients.setOnClickListener(this);
+
+        btn_ingredients.setOnClickListener(this);
 
         btn_guardar.setOnClickListener(this);
 
         makerecepyimg.setOnClickListener(this);
-            return vi;
+
+        return vi;
 
 
     }
@@ -149,21 +128,21 @@ public class NewRecepyFrac extends Fragment implements View.OnClickListener {
                     boolean check = data.getBooleanExtra("key", true);
                     if(check)
                     {
-                      li= dialog.getLista();
+                        listaIngredientes= dialog.getLista();
                         int d=0;
-                        for(int i=0;i<li.size();i++){
+                        for(int i=0;i<listaIngredientes.size();i++){
 
-                            if(li.get(i).getSelected()){
+                            if( listaIngredientes.get(i).getSelected() ){
                                 if (d==0) {
-                                    imageLoader.displayImage("drawable://" + li.get(i).getResId(), img1, options);
+                                    imageLoader.displayImage("drawable://" + listaIngredientes.get(i).getResId(), img1, options);
                                 }else if (d==1){
-                                    imageLoader.displayImage("drawable://" + li.get(i).getResId(), img2, options);
+                                    imageLoader.displayImage("drawable://" + listaIngredientes.get(i).getResId(), img2, options);
 
                                 }else if (d==2){
-                                    imageLoader.displayImage("drawable://" + li.get(i).getResId(), img3, options);
+                                    imageLoader.displayImage("drawable://" + listaIngredientes.get(i).getResId(), img3, options);
 
                                 }else if (d==3){
-                                    imageLoader.displayImage("drawable://" + li.get(i).getResId(), img4, options);
+                                    imageLoader.displayImage("drawable://" + listaIngredientes.get(i).getResId(), img4, options);
 
                                 }
                                 d=d+1;
@@ -172,9 +151,6 @@ public class NewRecepyFrac extends Fragment implements View.OnClickListener {
 
 
                         }
-                    }
-                    else
-                    {
                     }
                 }
                 break;
@@ -193,61 +169,80 @@ public class NewRecepyFrac extends Fragment implements View.OnClickListener {
         super.onPause();
     }
 
-
-
-    SelectIngredientsDialog dialog;
     @Override
     public void onClick(View v) {
-        if (v==btn_guardar){
 
+        if (v == btn_guardar ){
 
-            //deberia ser null
             SQLiteDatabase  db= mainAplicationDeafults.getDatabaseHelper().getWritableDatabase();
+            ContentValues nuevoRegistro = new ContentValues();
 
-            Title= editText_title_gab.getText().toString();
-
+            String recepy_title = editText_title_gab.getText().toString();
+            String descript =texdescription.getText().toString();
             int selected=grouo_buttons_gab.getCheckedRadioButtonId();
 
-            radiobtn= (RadioButton)vi.findViewById(selected);
-            comida=radiobtn.getText().toString();
+            radiobtn= (RadioButton) vi.findViewById(selected);
 
-            String descript =texdescription.getText().toString();
-            ContentValues nuevoRegistro = new ContentValues();
-            StringBuffer buffer=new StringBuffer();
 
-            if (li!=null){
 
-                for (int i =0;i< li.size(); i++){
-                   if (li.get(i).getSelected()){
+            if (recepy_title.length() > 0 )
+            {
+               if (radiobtn!=null) {
 
-                 String sd= Integer.toString(li.get(i).getKey_id()  ) ;
-                    buffer.append(sd+" ");
+                   if (listaIngredientes != null) {
+
+
+                       StringBuffer buffer = new StringBuffer();
+
+                       for (int i = 0; i < listaIngredientes.size(); i++) {
+
+                           if (listaIngredientes.get(i).getSelected()) {
+
+                               String sd = Integer.toString(listaIngredientes.get(i).getKey_id());
+                               buffer.append(sd + " ");
+                           }
+                       }
+
+                       nuevoRegistro.put(Sqldatabase.KEY_LISTA, buffer.toString());
+                       nuevoRegistro.put("titulo", recepy_title);
+                       if (progressChanged > 0) {
+                           nuevoRegistro.put(Sqldatabase.KEY_TIEMPO, progressChanged + " min");
+                       }
+                     String comida= radiobtn.getText().toString();
+                      nuevoRegistro.put("status", comida);
+
+                       if (descript.length() > 5) {
+                           nuevoRegistro.put(Sqldatabase.KEY_DESCRIPCION, descript);
+                       }
+
+                       db.insert("recepys", null, nuevoRegistro);
+
+                       getActivity().finish();
+
+                   } else {
+                       Toast t = Toast.makeText(getActivity(), "Debe escoger al menos un Ingrediente", Toast.LENGTH_SHORT);
+                       t.show();
                    }
-                }
+               }else{
+                   Toast t = Toast.makeText(getActivity(), "Escoge un tipo  de comida", Toast.LENGTH_SHORT);
+                   t.show();
+               }
 
-                nuevoRegistro.put(Sqldatabase.KEY_LISTA, buffer.toString());
+
+
+            }else {
+                Toast t = Toast.makeText(getActivity(),"Debe poner un titulo", Toast.LENGTH_SHORT);
+                    t.show();
             }
 
-            nuevoRegistro.put("titulo", Title);
 
-
-
-            nuevoRegistro.put(Sqldatabase.KEY_TIEMPO,progressChanged+" min");
-            nuevoRegistro.put("status", comida);
-            nuevoRegistro.put(Sqldatabase.KEY_DESCRIPCION,descript);
-
-
-            db.insert("recepys", null, nuevoRegistro);
-            getActivity().finish();
         }else if (v==btn_ingredients){
-
-             dialog = SelectIngredientsDialog.newInstance(1);
+/*
+            dialog = SelectIngredientsDialog.newInstance();
             dialog.setTargetFragment(this,DIALOG_FRAGMENT);
             dialog.show(getFragmentManager(), "dialog");
-            if (dialog.getShowsDialog()){
-                Log.i("gol","se esta viendo la imagen");
-
-            }
+*/
+            showDialog();
         }
         else if (v==makerecepyimg){
 
@@ -269,8 +264,29 @@ public class NewRecepyFrac extends Fragment implements View.OnClickListener {
 
         }
     }
-    public void setupUI(View view) {
 
+    private void showDialog() {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+         FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+
+            ft.remove(prev);
+
+        }
+
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        dialog = SelectIngredientsDialog.newInstance();
+        dialog.setTargetFragment(this, DIALOG_FRAGMENT);
+        dialog.show(ft, "dialog");
+    }
+
+
+    public void setupUI(View view) {
         //Set up touch listener for non-text box views to hide keyboard.
         if(!(view instanceof EditText)) {
 
@@ -283,7 +299,6 @@ public class NewRecepyFrac extends Fragment implements View.OnClickListener {
 
             });
         }
-
         //If a layout container, iterate over children and seed recursion.
         if (view instanceof ViewGroup) {
 

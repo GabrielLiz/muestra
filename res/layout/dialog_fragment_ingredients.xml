@@ -19,8 +19,9 @@
             android:id="@+id/searcheable_btn_dialog_gab"
             />
     </LinearLayout>
+
     <GridView
-        android:id="@+id/gridview_dialog"
+        android:id="@+id/gridview_dialog_gab"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginBottom="48dp"

@@ -14,7 +14,6 @@ import java.util.List;
 public class PageViewPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider{
 
     private List<Fragment> fragments;
-    private final String[] TITLES = { "Categories", "Home" };
     public  PageViewPagerAdapter(FragmentManager fm){
         super(fm);
         fragments=new ArrayList<Fragment>();

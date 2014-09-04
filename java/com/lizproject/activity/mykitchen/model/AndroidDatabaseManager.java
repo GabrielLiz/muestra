@@ -1170,6 +1170,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 			 indexInfo.index=currentrow;
 
 
+
 		 // when user clicks on the previous button update the table with the previous 10 tuples from the database
 			previous.setOnClickListener(new View.OnClickListener() 
 		    {

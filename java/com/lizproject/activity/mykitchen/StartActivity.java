@@ -221,36 +221,6 @@ public class StartActivity extends BaseActivity {
         getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
-    /*
-        public interface OnKeyboardVisibilityListener {
-
-            void onVisibilityChanged(boolean visible);
-        }
-
-        public final void setKeyboardListener(final OnKeyboardVisibilityListener listener) {
-            final View activityRootView = ((ViewGroup) getActivity().findViewById(android.R.id.content)).getChildAt(0);
-            activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-                private boolean wasOpened;
-
-                private final Rect r = new Rect();
-
-                @Override
-                public void onGlobalLayout() {
-                    activityRootView.getWindowVisibleDisplayFrame(r);
-
-                    int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
-                    boolean isOpen = heightDiff > 100;
-                    if (isOpen == wasOpened) {
-                        return;
-                    }
-
-                    wasOpened = isOpen;
-                    listener.onVisibilityChanged(isOpen);
-                }
-            });
-        }
-        */
     // the selection from ListView
     private void selectItem(int pos) {
         // update the main content by replacing fragments

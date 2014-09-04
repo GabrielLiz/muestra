@@ -2,6 +2,7 @@ package com.lizproject.activity.mykitchen.ui.core.fragments;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,32 +18,35 @@ import com.lizproject.activity.mykitchen.ui.core.presenter.PresenterListGrid;
 
 import java.util.ArrayList;
 
-public class IngredientsFrac extends Fragment implements Runnable {
+public class IngredientsFrac extends Fragment  {
     private GridView gridvi;
     private ArrayList<PresenterListGrid> lista;
     private  SQLiteDatabase db;
-    private Thread thread;
     private GridViewAdapter theadapter;
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        thread= new Thread(this);
-        thread.start();
+    public void onDetach() {
+        super.onDetach();
 
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vi = inflater.inflate(R.layout.my_ingredients_fracment, container, false);
-
-
-
-        gridvi = (GridView) vi.findViewById(R.id.gridview);
-        theadapter = new GridViewAdapter(getActivity(), -1, lista);
+            arraylista();
+        gridvi = (GridView) vi.findViewById(R.id.grid_gab);
+        theadapter = new GridViewAdapter(getActivity(),-1,lista);
 
         gridvi.setAdapter(theadapter);
+
+
 
 
         gridvi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,6 +71,7 @@ public class IngredientsFrac extends Fragment implements Runnable {
 
     }
 
+
     public void arraylista() {
         lista = new ArrayList<PresenterListGrid>();
 
@@ -89,25 +94,54 @@ public class IngredientsFrac extends Fragment implements Runnable {
         for (int d = 0; d < status.length; d++) {
             if (status[d] == 1) {
                 PresenterListGrid s = new PresenterListGrid(keyid[d] - 1);
+
+                if (d<=3){
+                    s.setCategory_id(1);
+                    s.setCategory("Lechugas");
+                }else{
+                    s.setCategory_id(2);
+                    s.setCategory("segundones");
+                }
                 lista.add(s);
 
             }
         }
+
         for (int y = 0; y < status.length; y++) {
             if (status[y] == 0) {
                 PresenterListGrid s = new PresenterListGrid(keyid[y] - 1);
+                s.setCategory_id(y);
+                if (y<=3){
+                    s.setCategory_id(1);
+                    s.setCategory("Lechugas");
+                }else{
+                    s.setCategory_id(2);
+                    s.setCategory("segundones");
+                }
                 lista.add(s);
 
             }
         }
     }
 
+    private class TareaAsynk extends AsyncTask<String, Void, String>{
 
-    @Override
-    public void run() {
-        arraylista();
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            arraylista();
+            return null;
+        }
     }
 }
 

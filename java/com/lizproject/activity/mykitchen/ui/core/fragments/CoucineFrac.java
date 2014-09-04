@@ -23,10 +23,9 @@ import java.util.List;
 public class CoucineFrac extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Runnable{
 
     //debug options
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String TAG = "gabito";
 
-    //private Button btn;
     public ExpandingListView mListView;
     private final int CELL_DEFAULT_HEIGHT = 200;
     private List<ExpandableListItem> mData;
@@ -66,7 +65,6 @@ public class CoucineFrac extends Fragment implements SwipeRefreshLayout.OnRefres
 
         FracRefreshLyt.setOnRefreshListener(this);
 
-     //   btn = (Button) vi.findViewById(R.id.btn_intent);
 
 
 
@@ -137,6 +135,7 @@ public class CoucineFrac extends Fragment implements SwipeRefreshLayout.OnRefres
 
 
                 mData.add(new ExpandableListItem(cod, desc, tiem, CELL_DEFAULT_HEIGHT, nom, info, data));
+
             } while (c.moveToNext());
         }
 
@@ -146,6 +145,7 @@ public class CoucineFrac extends Fragment implements SwipeRefreshLayout.OnRefres
     @Override
     public void onRefresh() {
          getDataSql();
+
         adapter.clear();
         adapter.addAll(mData);
         adapter.notifyDataSetChanged();
@@ -195,4 +195,7 @@ public class CoucineFrac extends Fragment implements SwipeRefreshLayout.OnRefres
             exp.printStackTrace();
         }
     }
+
+
+
 }

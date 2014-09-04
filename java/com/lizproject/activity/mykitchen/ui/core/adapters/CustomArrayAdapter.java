@@ -26,6 +26,7 @@ import com.lizproject.activity.mykitchen.R;
 import com.lizproject.activity.mykitchen.mainAplicationDeafults;
 import com.lizproject.activity.mykitchen.model.Sqldatabase;
 import com.lizproject.activity.mykitchen.ui.core.core.ExpandingLayout;
+import com.lizproject.activity.mykitchen.ui.core.core.TxtCustom;
 import com.lizproject.activity.mykitchen.ui.core.presenter.ExpandableListItem;
 import com.lizproject.activity.mykitchen.ui.core.presenter.IngredientsImgManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -47,7 +48,7 @@ public class CustomArrayAdapter extends ArrayAdapter<ExpandableListItem> {
     private DisplayImageOptions options;
     private Context ctx;
     private int mister;
-
+   private int post=1;
     public CustomArrayAdapter(Context context, int layoutViewResourceId, List<ExpandableListItem> data) {
         super(context, layoutViewResourceId, data);
         mDatas = data;
@@ -70,14 +71,31 @@ public class CustomArrayAdapter extends ArrayAdapter<ExpandableListItem> {
 
         final ExpandableListItem object = mDatas.get(position);
         mister = position;
+        final hold holder;
 
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
             convertView = inflater.inflate(mLayoutViewResourceId, parent, false);
+            holder = new hold();
+            holder.Frm=(LinearLayout) convertView.findViewById(R.id.layout_ingredient_list_gab);
+            int post=1;
+            for (int i=0;i<object.getRes().length;i++) {
+                holder.cust = new TxtCustom(ctx);
+                holder.cust.setText(post + " - "+object.getList(i));
+                holder.Frm.addView(holder.cust);
+                post++;
+            }
+            convertView.setTag(holder);
+
+        }else {
+            holder = (hold) convertView.getTag();
+
         }
 
 
         LinearLayout linearLayout = (LinearLayout) (convertView.findViewById(R.id.item_linear_layout));
+
+
 
         LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams  (AbsListView.LayoutParams.MATCH_PARENT, object.getCollapsedHeight());
         linearLayout.setLayoutParams(linearLayoutParams);
@@ -100,7 +118,7 @@ public class CustomArrayAdapter extends ArrayAdapter<ExpandableListItem> {
                 db.delete(Sqldatabase.TABLE_RECEPYS, Sqldatabase.KEY_TITULO + " = '" + object.getTitle() + "'", null);
 
                 mDatas.remove(position);
-                notifyDataSetChanged();
+               notifyDataSetChanged();
             }
         });
         titleView.setText(object.getTitle());
@@ -122,18 +140,21 @@ public class CustomArrayAdapter extends ArrayAdapter<ExpandableListItem> {
 
         for (int ar = 0; ar < array.length; ar++) {
 
+
+
             if (array.length>=1){
 
-            if (ar == 0) {
-                imageLoader.displayImage("drawable://" + new IngredientsImgManager(array[ar]).getDrawable(), img1, options);
-            } else if (ar == 1) {
-                imageLoader.displayImage("drawable://" + new IngredientsImgManager(array[ar]).getDrawable(), img2, options);
-            } else if (ar == 2) {
-                imageLoader.displayImage("drawable://" + new IngredientsImgManager(array[ar]).getDrawable(), img3, options);
-            } else if (ar == 3) {
-                imageLoader.displayImage("drawable://" + new IngredientsImgManager(array[ar]).getDrawable(), img4, options);
+                if (ar == 0) {
+                    imageLoader.displayImage("drawable://" + new IngredientsImgManager(array[ar]).getDrawable(), img1, options);
+                } else if (ar == 1) {
+                    imageLoader.displayImage("drawable://" + new IngredientsImgManager(array[ar]).getDrawable(), img2, options);
+                } else if (ar == 2) {
+                    imageLoader.displayImage("drawable://" + new IngredientsImgManager(array[ar]).getDrawable(), img3, options);
+                } else if (ar == 3) {
+                    imageLoader.displayImage("drawable://" + new IngredientsImgManager(array[ar]).getDrawable(), img4, options);
+                }
             }
-           }
+            post++;
         }
 
         expandingLayout.setExpandedHeight(object.getExpandedHeight());
@@ -175,6 +196,9 @@ public class CustomArrayAdapter extends ArrayAdapter<ExpandableListItem> {
 
         return output;
     }
-
+    static class hold {
+        LinearLayout Frm;
+        TxtCustom cust;
+    }
 
 }

@@ -1,7 +1,12 @@
 package com.lizproject.activity.mykitchen.ui.core.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,31 +14,35 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.lizproject.activity.mykitchen.R;
+import com.lizproject.activity.mykitchen.mainAplicationDeafults;
+import com.lizproject.activity.mykitchen.model.Sqldatabase;
 import com.lizproject.activity.mykitchen.ui.core.presenter.PresenterListGrid;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> {
+public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> implements StickyGridHeadersSimpleAdapter{
 
     private DisplayImageOptions options;
     private ImageLoader imageLoader;
 
-    private List<PresenterListGrid> mData;
     private Context ctx;
+    private Dialog dialog;
+    private int resid;
 
-    /*
-       El adaptador del GridView es usado dos veces en la pagina principal de ingredientes y en
-       el "DialogFragment"  para agregar mas Ingredientes
-     */
-    public GridViewAdapter(Context context, int layoutViewResourceId, List<PresenterListGrid> data) {
-        super(context, layoutViewResourceId, data);
-        this.mData = data;
-        this.ctx = context;
+    List <PresenterListGrid>lis;
 
+    public GridViewAdapter(Context context, int resource, List<PresenterListGrid>objects) {
+        super(context, resource, objects);
+
+        this.ctx=context;
+        this.lis=objects;
         imageLoader = ImageLoader.getInstance();
 
         options = new DisplayImageOptions.Builder()
@@ -45,9 +54,38 @@ public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> {
 
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public long getHeaderId(int position) {
+        return getItem(position).getCategory_id();
     }
+
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder holder;
+
+
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            LayoutInflater inflater = ((Activity)ctx).getLayoutInflater();
+
+
+            convertView = inflater.inflate(R.layout.header, parent, false);
+
+
+            holder.textView = (TextView)convertView.findViewById(R.id.text_des_gab);
+            convertView.setTag(holder);
+
+
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+        holder.textView.setText(getItem(position).getCategory());
+
+
+        return convertView;
+    }
+
+
+
 
 
     @Override
@@ -59,38 +97,94 @@ public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> {
         if (convertView == null) {
 //                no view - so create a new one
 
-           LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+           LayoutInflater inflater = ((Activity)ctx).getLayoutInflater();
             view = inflater.inflate(R.layout.item_grid_image, parent, false);
             gridViewImageHolder = new ViewHolder();
+
             gridViewImageHolder.frame = (RelativeLayout) view.findViewById(R.id.fondo_img_grid_gab);
             gridViewImageHolder.imageView = (ImageView) view.findViewById(R.id.image);
             gridViewImageHolder.imageView.setMaxHeight(80);
             gridViewImageHolder.imageView.setMaxWidth(80);
             gridViewImageHolder.btn = (Button) view.findViewById(R.id.btn_select_dialog_gab);
+            gridViewImageHolder.btn2=(Button) view.findViewById(R.id.btn_select_dialog_gab_type);
+            view.setTag(gridViewImageHolder);
 
             gridViewImageHolder.btn.setFocusable(false);
-            gridViewImageHolder.btn.setOnClickListener(new View.OnClickListener() {
+/*            gridViewImageHolder.btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getItem(position).setSelected(true);
+
                 }
             });
-
-            view.setTag(gridViewImageHolder);
-
-        } else {
-//                we've got a view
-            gridViewImageHolder = (ViewHolder) view.getTag();
-        }
-
-
-        // si el vegetable lo hay lo pinta el fondo de colores diferentes
-     /*   if (getItem(position).getHas_vegetable()) {
-            gridViewImageHolder.frame.setBackgroundColor(Color.parseColor("#ff4fff2c"));
-        } else {
-            gridViewImageHolder.frame.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
-        }
 */
+
+        } else {
+            gridViewImageHolder =(ViewHolder)view.getTag();
+        }
+
+        gridViewImageHolder.btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final CharSequence[] items = {" Kilogramos "," Mililitros "," Unidades "," Cicharitas","Tazas"};
+                // arraylist to keep the selected items
+
+                final ArrayList<Integer> seletedItems=new ArrayList();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+                builder.setTitle("Escoja el tipo  de medida");
+                builder.setMultiChoiceItems(items, null,
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int indexSelected,
+                                                boolean isChecked) {
+                                if (isChecked) {
+                                    // If the user checked the item, add it to the selected items
+                                    seletedItems.add(indexSelected);
+                                } else if (seletedItems.contains(indexSelected)) {
+                                    // Else, if the item is already in the array, remove it
+                                    seletedItems.remove(Integer.valueOf(indexSelected));
+                                }
+                            }
+                        })
+                        // Set the action buttons
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Your code when user clicked on OK
+                                //  You can write the code  to save the selected item here
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Your code when user clicked on Cancel
+
+                            }
+                        });
+
+
+                dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        for (int ars=0;ars<seletedItems.size();ars++){
+                            SQLiteDatabase db= mainAplicationDeafults.getDatabaseHelper().getWritableDatabase();
+                            ContentValues newregistro = new ContentValues();
+                            int total=position+1;
+                            newregistro.put("medidas",seletedItems.get(ars));
+                            db.update(Sqldatabase.TABLE_INGREDIENTS, newregistro, "id " + "=" + total, null);
+
+                        }
+                    }
+                });
+            }
+        });
+
         imageLoader.displayImage("drawable://" + getItem(position).getResId(), gridViewImageHolder.imageView, options);
 
 
@@ -98,10 +192,14 @@ public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> {
     }
 
 
-    static class ViewHolder {
+    protected class ViewHolder {
+        public TextView textView;
         ImageView imageView;
-        Button btn;
+        Button btn , btn2;
         RelativeLayout frame;
     }
-
+    protected class HeaderViewHolder {
+        public TextView textView;
+    }
 }
+

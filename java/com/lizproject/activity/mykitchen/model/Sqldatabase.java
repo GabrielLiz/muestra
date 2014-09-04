@@ -17,7 +17,7 @@ public class Sqldatabase extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
     private static final String DATABASE_NAME = "cocina.db";
     // Database Version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 11;
     // Common column users
     public static final String KEY_ID = "id";
     private static final String KEY_CREATED_AT = "created_at";
@@ -25,7 +25,7 @@ public class Sqldatabase extends SQLiteOpenHelper {
     // NOTES Table - column nmaes
     public static final String KEY_TITULO = "titulo";
     public static final String KEY_STATUS = "status";
-    public static final String KEY_QUANTY = "cantidad";
+    public static final String KEY_QUANTY = "medidas";
     // TAGS Table - column names
     private static final String KEY_TAG_NAME = "tag_name";
 
@@ -35,19 +35,12 @@ public class Sqldatabase extends SQLiteOpenHelper {
     public static final String TABLE_RECEPYS = "recepys";
     public static final String TABLE_INGREDIENTS = "ingredientes";
 
-
     // NOTE_TAGS Table - column names
     private static final String KEY_TODO_ID = "todo_id";
     private static final String KEY_TAG_ID = "tag_id";
     public static final String KEY_TIEMPO = "tiempo_preparacion";
     public static final String KEY_LISTA = "lista_ingredientes";
     public static final String KEY_DESCRIPCION = "descripcion";
-    public static final String KEY_CANTIDAD_EN_CUCHARITAS = "cuchartitas";
-    public static final String KEY_CANTIDAD_EN_KYLOS = "kylogramos";
-    public static final String KEY_CANTIDAD_EN_LITROS = "litros";
-    public static final String KEY_CANTIDAD_EN_UNIDADES = "unidades";
-    public static final String KEY_MEDIDAS_TAZAS = "tazas";
-
     private static final String CREATE_TABLE_RECETAS = "CREATE TABLE "
             + TABLE_RECEPYS + "(" +
             /*0*/ KEY_ID + " INTEGER PRIMARY KEY, " +
@@ -62,12 +55,7 @@ public class Sqldatabase extends SQLiteOpenHelper {
             /*1*/KEY_ID + " INTEGER PRIMARY KEY," +
             /*2*/KEY_TITULO + " TEXT," +
             /*3*/KEY_QUANTY + " INTEGER, " +
-            /*4*/KEY_STATUS + " INTEGER, " +
-            /*5*/KEY_CANTIDAD_EN_CUCHARITAS + " INTEGER, " +
-            /*6*/KEY_CANTIDAD_EN_KYLOS + " REAL, " +
-            /*7*/KEY_CANTIDAD_EN_LITROS + " REAL, " +
-            /*8*/KEY_CANTIDAD_EN_UNIDADES + " INTEGER, " +
-            /*9*/KEY_MEDIDAS_TAZAS + "TEXT" +
+            /*4*/KEY_STATUS + " INTEGER " +
             ")";
 
 
