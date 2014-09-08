@@ -17,7 +17,7 @@ public class Sqldatabase extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
     private static final String DATABASE_NAME = "cocina.db";
     // Database Version
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 12;
     // Common column users
     public static final String KEY_ID = "id";
     private static final String KEY_CREATED_AT = "created_at";
@@ -39,6 +39,7 @@ public class Sqldatabase extends SQLiteOpenHelper {
     private static final String KEY_TODO_ID = "todo_id";
     private static final String KEY_TAG_ID = "tag_id";
     public static final String KEY_TIEMPO = "tiempo_preparacion";
+    public static final String KEY_CATEGORY="Category";
     public static final String KEY_LISTA = "lista_ingredientes";
     public static final String KEY_DESCRIPCION = "descripcion";
     private static final String CREATE_TABLE_RECETAS = "CREATE TABLE "
@@ -55,7 +56,8 @@ public class Sqldatabase extends SQLiteOpenHelper {
             /*1*/KEY_ID + " INTEGER PRIMARY KEY," +
             /*2*/KEY_TITULO + " TEXT," +
             /*3*/KEY_QUANTY + " INTEGER, " +
-            /*4*/KEY_STATUS + " INTEGER " +
+            /*4*/KEY_STATUS + " INTEGER, " +
+            /*5*/KEY_CATEGORY+ " INTEGER " +
             ")";
 
 

@@ -24,7 +24,6 @@ public class IngredientsFrac extends Fragment  {
     private  SQLiteDatabase db;
     private GridViewAdapter theadapter;
 
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -83,43 +82,51 @@ public class IngredientsFrac extends Fragment  {
         int status[] = new int[c.getCount()];
         String mad[] = new String[c.getCount()];
         int keyid[] = new int[c.getCount()];
-
+        int category[]= new int [c.getCount()];
         while (c.moveToNext()) {
             keyid[count] = c.getInt(0);
-
+            mad[count] = c.getString(1);
             status[count] = c.getInt(3);
+            category[count]=c.getInt(4);
             count = count + 1;
 
         }
         for (int d = 0; d < status.length; d++) {
-            if (status[d] == 1) {
-                PresenterListGrid s = new PresenterListGrid(keyid[d] - 1);
 
-                if (d<=3){
-                    s.setCategory_id(1);
-                    s.setCategory("Lechugas");
-                }else{
-                    s.setCategory_id(2);
-                    s.setCategory("segundones");
-                }
-                lista.add(s);
+           if (category[d]==2) {
+                   PresenterListGrid s = new PresenterListGrid(keyid[d] - 1);
+                   s.setName(mad[d]);
+                   s.setCategory_id(category[d]);
+                   lista.add(s);
 
-            }
+           }
         }
 
         for (int y = 0; y < status.length; y++) {
-            if (status[y] == 0) {
-                PresenterListGrid s = new PresenterListGrid(keyid[y] - 1);
-                s.setCategory_id(y);
-                if (y<=3){
-                    s.setCategory_id(1);
-                    s.setCategory("Lechugas");
-                }else{
-                    s.setCategory_id(2);
-                    s.setCategory("segundones");
-                }
-                lista.add(s);
 
+                if (category[y]==1){
+                PresenterListGrid s = new PresenterListGrid(keyid[y] - 1);
+                s.setName(mad[y]);
+                s.setCategory_id(category[y]);
+
+
+                    s.setSelected(true);
+
+
+                lista.add(s);
+                }
+        }
+
+        for (int r = 0; r < status.length; r++) {
+
+            if (category[r]==0){
+                PresenterListGrid s = new PresenterListGrid(keyid[r] - 1);
+                s.setName(mad[r]);
+                s.setCategory_id(category[r]);
+
+
+
+                lista.add(s);
             }
         }
     }

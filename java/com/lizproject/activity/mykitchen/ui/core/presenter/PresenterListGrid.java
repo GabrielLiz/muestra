@@ -22,12 +22,14 @@ public class PresenterListGrid {
     private int category_id;
     private  String query;
     private String Category;
+    private   String categorias[]={"none","Ingredientes Favoritos","Frutas y Vegetales"};
 
     public int getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(int category_id) {
+    public void setCategory_id(int category_id)
+    {
         this.category_id = category_id;
     }
 
@@ -41,7 +43,7 @@ public class PresenterListGrid {
 
 
     public String  getCategory() {
-        return  Category;
+        return  categorias[getCategory_id()];
     }
     public void setCategory(String category) {
         Category = category;
@@ -87,7 +89,9 @@ public class PresenterListGrid {
         ContentValues valores = new ContentValues();
 
         if (has_vegetable) {
+
             valores.put(Sqldatabase.KEY_STATUS, 1);
+            
         }else {
             valores.put(Sqldatabase.KEY_STATUS, 0);
         }

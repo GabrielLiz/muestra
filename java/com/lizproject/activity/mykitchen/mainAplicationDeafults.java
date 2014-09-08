@@ -8,8 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 
 import com.lizproject.activity.mykitchen.model.Sqldatabase;
+import com.lizproject.activity.mykitchen.ui.core.presenter.IngredientsUtil;
+import com.lizproject.activity.mykitchen.ui.core.util.SitesXmlPullParser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import java.util.List;
 
 public class mainAplicationDeafults extends Application{
 
@@ -22,20 +26,24 @@ public class mainAplicationDeafults extends Application{
         configureDefaultImageLoader(getApplicationContext());
         databaseg=new Sqldatabase(this);
 
-       SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         if(!prefs.getBoolean("firstTime", false)) {
             //////////////////////////////////
-             SQLiteDatabase db=databaseg.getWritableDatabase();
-            String data[]=getResources().getStringArray(R.array.ingredients_array);
+            SQLiteDatabase db=databaseg.getWritableDatabase();
+
+            List<IngredientsUtil> uti= SitesXmlPullParser.getStackSitesFromFile(this);
             ContentValues nuevoRegistro = new ContentValues();
-            for (int i=0; i< data.length;i++) {
-                nuevoRegistro.put("titulo", data[i]);
-                nuevoRegistro.put(Sqldatabase.KEY_QUANTY,0);
-                nuevoRegistro.put(Sqldatabase.KEY_STATUS,0);
+
+            for (int i=0; i< uti.size();i++) {
+                nuevoRegistro.put("titulo", uti.get(i).getName());
+                nuevoRegistro.put(Sqldatabase.KEY_QUANTY,Integer.parseInt(uti.get(i).getQuanty()));
+                nuevoRegistro.put(Sqldatabase.KEY_STATUS,Integer.parseInt(uti.get(i).getStatus()));
+                nuevoRegistro.put(Sqldatabase.KEY_CATEGORY,Integer.parseInt(uti.get(i).getClasstype()));
                 db.insert(Sqldatabase.TABLE_INGREDIENTS, null, nuevoRegistro);
+
             }
 
-////////////////////////////////////////////////////////////
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("firstTime", true);
             editor.commit();

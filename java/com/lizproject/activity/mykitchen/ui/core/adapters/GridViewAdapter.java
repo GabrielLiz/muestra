@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> implements 
 
     @Override
     public long getHeaderId(int position) {
+
         return getItem(position).getCategory_id();
     }
 
@@ -105,31 +107,36 @@ public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> implements 
             gridViewImageHolder.imageView = (ImageView) view.findViewById(R.id.image);
             gridViewImageHolder.imageView.setMaxHeight(80);
             gridViewImageHolder.imageView.setMaxWidth(80);
-            gridViewImageHolder.btn = (Button) view.findViewById(R.id.btn_select_dialog_gab);
             gridViewImageHolder.btn2=(Button) view.findViewById(R.id.btn_select_dialog_gab_type);
+            gridViewImageHolder.textView=(TextView) view.findViewById(R.id.text_ingredient_title_gab);
+            gridViewImageHolder.box_Fav=(CheckBox)view.findViewById(R.id.check_fav_star_gab);
+            gridViewImageHolder.box_Fav.setChecked(getItem(position).getSelected());
+
             view.setTag(gridViewImageHolder);
 
-            gridViewImageHolder.btn.setFocusable(false);
-/*            gridViewImageHolder.btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getItem(position).setSelected(true);
-
-                }
-            });
-*/
 
         } else {
             gridViewImageHolder =(ViewHolder)view.getTag();
         }
 
+        gridViewImageHolder.box_Fav.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (((CheckBox) v).isChecked()) {
+
+                }
+            }
+        });
+
         gridViewImageHolder.btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final CharSequence[] items = {" Kilogramos "," Mililitros "," Unidades "," Cicharitas","Tazas"};
+                final CharSequence[] items = {" Kilogramos ", " Mililitros ", " Unidades ", " Cicharitas", "Tazas"};
                 // arraylist to keep the selected items
 
-                final ArrayList<Integer> seletedItems=new ArrayList();
+                final ArrayList<Integer> seletedItems = new ArrayList();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
                 builder.setTitle("Escoja el tipo  de medida");
@@ -172,11 +179,11 @@ public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> implements 
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        for (int ars=0;ars<seletedItems.size();ars++){
-                            SQLiteDatabase db= mainAplicationDeafults.getDatabaseHelper().getWritableDatabase();
+                        for (int ars = 0; ars < seletedItems.size(); ars++) {
+                            SQLiteDatabase db = mainAplicationDeafults.getDatabaseHelper().getWritableDatabase();
                             ContentValues newregistro = new ContentValues();
-                            int total=position+1;
-                            newregistro.put("medidas",seletedItems.get(ars));
+                            int total = position + 1;
+                            newregistro.put("medidas", seletedItems.get(ars));
                             db.update(Sqldatabase.TABLE_INGREDIENTS, newregistro, "id " + "=" + total, null);
 
                         }
@@ -193,10 +200,11 @@ public class GridViewAdapter extends ArrayAdapter<PresenterListGrid> implements 
 
 
     protected class ViewHolder {
-        public TextView textView;
+        TextView textView;
         ImageView imageView;
-        Button btn , btn2;
+        Button btn2;
         RelativeLayout frame;
+        CheckBox box_Fav;
     }
     protected class HeaderViewHolder {
         public TextView textView;
